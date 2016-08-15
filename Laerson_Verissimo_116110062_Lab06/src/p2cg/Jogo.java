@@ -1,8 +1,11 @@
 package p2cg;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
- * <code>Jogo</code> é a classe abstrata base para a representação de diferentes tipos de jogos, onde
- * as subclasses diretas, representam cópias que um determinado usuário tem de um jogo.
+ * <code>Jogo</code> é a classe que representa uma cópia que um determinado usuário tem de um jogo.
  * <p>
  * Um objeto <code>Jogo</code> guarda informações específicas de um jogo (nome, gênero, preço, ...), e
  * informações relacionadas ao usuário daquele jogo (recordes, vezes jogadas, ...)
@@ -12,17 +15,28 @@ package p2cg;
  */
 public class Jogo {
 	/**
-	 *
+	 * Título do jogo na loja.
+	 * <p>
+	 * Cada jogo tem um nome único, e imutável.
 	 */
 	private final String nome;
 	/**
-	 * 
+	 * Preço atual do jogo na loja.
+	 * <p>
+	 * O preço pode variar com o tempo.
 	 */
 	private Double preco;
 	/**
-	 * 
+	 * Enum que armazena o gênero do jogo (Rpg, luta, plataforma, etc).
 	 */
 	private final Tipo tipo;
+	/**
+	 * Essa coleção armazena Enumeradores que informam características sobre a jogabilidade.
+	 * <p>
+	 */
+	//Não é final, pois modos de jogo podem ser adicionados(ou removidos), ao longo do tempo
+	//Ex: O jogo ser originalmente single player, mas futuramente adicionarem um modo multiplayer
+	private HashSet<Jogabilidade> jogabilidade;
 	/**
 	 * Maior score obtido pelo usuário que tem uma cópia desse jogo.
 	 */
@@ -36,12 +50,18 @@ public class Jogo {
 	 */
 	private int vezesConcluido;
 	/**
+	 * Constroi um <code>Jogo</code>. As informações relacionadas ao usuário do jogo (maior score,
+	 * quantas vezes foi jogado, etc), são iniciadas com valor default.
+	 * <p>
 	 * 
-	 * @param nome
-	 * @param preco
-	 * @throws Exception
+	 * @param nome Nome do jogo.
+	 * @param preco Preço do jogo.
+	 * @param tipo Enum  <code>Tipo</code> que armazena o tipo(gênero) do jogo.
+	 * @param jogabilidade Conjunto de Enumeradores, que armazena os modos de jogo.
+	 * A coleção HashSet garante que não há duplicatas.
+	 * @throws Exception se o paramêtro <code>nome</code> estiver vazio, ou se o preço for negativo.
 	 */
-	public Jogo(String nome, Double preco, Tipo tipo) throws Exception {
+	public Jogo(String nome, Double preco, Tipo tipo, HashSet<Jogabilidade> jogabilidade) throws Exception {
 		if(checaStringVazia(nome))
 			throw new Exception("nome não pode ser vazio");
 		if(preco < 0)
@@ -49,10 +69,8 @@ public class Jogo {
 		
 		this.nome = nome;
 		this.preco = preco;
-		this
-		this.maiorScore = 0;
-		this.vezesJogado = 0;
-		this.vezesConcluido = 0;
+		this.tipo = tipo;
+		this.jogabilidade = jogabilidade;
 	}
 	/**
 	 * Checa se a <code>String</code> passada como argumento está vazia.
@@ -62,7 +80,7 @@ public class Jogo {
 	 * @param s String a ser checada.
 	 * @return <code>true</true> se a <code>String</code> estiver vazia.
 	 */
-	protected final boolean checaStringVazia(String s) {
+	private static boolean checaStringVazia(String s) {
 		if(s == null || s.trim().length() == 0)
 			return true;
 		return false;
@@ -82,5 +100,29 @@ public class Jogo {
 			vezesConcluido ++;
 		vezesJogado++;
 	}
-
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Jogo other = (Jogo) obj;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		return true;
+	}
+	
+	
 }

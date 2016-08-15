@@ -1,0 +1,76 @@
+package p2cg;
+
+/**
+ * <code>Jogo</code> é a classe abstrata base para a representação de diferentes tipos de jogos, onde
+ * as subclasses diretas, representam cópias que um determinado usuário tem de um jogo.
+ * <p>
+ * Um objeto <code>Jogo</code> guarda informações específicas de um jogo (nome, gênero, preço, ...), e
+ * informações relacionadas ao usuário daquele jogo (recordes, vezes jogadas, ...)
+. * 
+ * @author laersonsv
+ *
+ */
+public class Jogo {
+	/**
+	 *
+	 */
+	private final String nome;
+	/**
+	 * 
+	 */
+	private Double preco;
+	/**
+	 * Maior score obtido pelo usuário que tem uma cópia desse jogo.
+	 */
+	private int maiorScore;
+	/**
+	 * Quantidade de vezes que o usuário jogou o jogo.
+	 */
+	private int vezesJogado;
+	/**
+	 * Quantidade de vezes que o usuário concluiu o jogo
+	 */
+	private int vezesConcluido;
+	/**
+	 * 
+	 * @param nome
+	 * @param preco
+	 * @throws Exception
+	 */
+	public Jogo(String nome, Double preco) throws Exception {
+		if(checaStringVazia(nome))
+			throw new Exception("nome não pode ser vazio");
+		if(preco < 0)
+			throw new Exception("preco não pode ser negativo");
+		
+		this.nome = nome;
+		this.preco = preco;
+		this.maiorScore = 0;
+		this.vezesJogado = 0;
+		this.vezesConcluido = 0;
+	}
+	/**
+	 * Checa se a <code>String</code> passada como argumento está vazia.
+	 * <p>
+	 * A string é considerada vazia, mesmo que tenha caracteres não-gráficos.
+	 * 
+	 * @param s String a ser checada.
+	 * @return <code>true</true> se a <code>String</code> estiver vazia.
+	 */
+	protected final boolean checaStringVazia(String s) {
+		if(s == null || s.trim().length() == 0)
+			return true;
+		return false;
+	}
+	
+	public void registraJogada (int score, boolean wasFinished) throws Exception {
+		if(score < 0)
+			throw new Exception("Score não pode ser negativo");
+		if(score > maiorScore)
+			maiorScore = score;
+		if(wasFinished)
+			vezesConcluido ++;
+		vezesJogado++;
+	}
+
+}

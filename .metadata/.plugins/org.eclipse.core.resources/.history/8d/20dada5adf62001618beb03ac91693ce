@@ -1,0 +1,5 @@
+package p2cg;
+
+enum Jogabilidade {
+
+}

@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+package p2cg;
+
+/**
+ * @author laersonsv
+ *
+ */
+public abstract class Jogo {
+
+}

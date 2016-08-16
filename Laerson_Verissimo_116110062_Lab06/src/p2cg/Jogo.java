@@ -123,6 +123,61 @@ public class Jogo {
 			return false;
 		return true;
 	}
+	/**
+	 * @return the preco
+	 */
+	public Double getPreco() {
+		return preco;
+	}
+	/**
+	 * @param preco the preco to set
+	 */
+	public void setPreco(Double preco) {
+		if(preco < 0)
+		this.preco = preco;
+	}
+	/**
+	 * @return the jogabilidade
+	 */
+	public HashSet<Jogabilidade> getJogabilidade() {
+		return jogabilidade;
+	}
+	/**
+	 * @param jogabilidade the jogabilidade to set
+	 */
+	public void setJogabilidade(HashSet<Jogabilidade> jogabilidade) {
+		this.jogabilidade = jogabilidade;
+	}
+	/**
+	 * @return the nome
+	 */
+	public String getNome() {
+		return nome;
+	}
+	/**
+	 * @return the tipo
+	 */
+	public Tipo getTipo() {
+		return tipo;
+	}
+	/**
+	 * @return the maiorScore
+	 */
+	public int getMaiorScore() {
+		return maiorScore;
+	}
+	/**
+	 * @return the vezesJogado
+	 */
+	public int getVezesJogado() {
+		return vezesJogado;
+	}
+	/**
+	 * @return the vezesConcluido
+	 */
+	public int getVezesConcluido() {
+		return vezesConcluido;
+	}
 	
 	
 }

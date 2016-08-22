@@ -1,6 +1,5 @@
 package p2cg;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,21 +21,15 @@ public class Jogo {
 	private final String nome;
 	/**
 	 * Preço atual do jogo na loja.
-	 * <p>
-	 * O preço pode variar com o tempo.
 	 */
 	private Double preco;
-	/**
-	 * Enum que armazena o gênero do jogo (Rpg, luta, plataforma, etc).
-	 */
-	private final Tipo tipo;
 	/**
 	 * Essa coleção armazena Enumeradores que informam características sobre a jogabilidade.
 	 * <p>
 	 */
 	//Não é final, pois modos de jogo podem ser adicionados(ou removidos), ao longo do tempo
 	//Ex: O jogo ser originalmente single player, mas futuramente adicionarem um modo multiplayer
-	private HashSet<Jogabilidade> jogabilidade;
+	private Set<Jogabilidade> jogabilidade;
 	/**
 	 * Maior score obtido pelo usuário que tem uma cópia desse jogo.
 	 */
@@ -53,15 +46,13 @@ public class Jogo {
 	 * Constroi um <code>Jogo</code>. As informações relacionadas ao usuário do jogo (maior score,
 	 * quantas vezes foi jogado, etc), são iniciadas com valor default.
 	 * <p>
-	 * 
 	 * @param nome Nome do jogo.
 	 * @param preco Preço do jogo.
-	 * @param tipo Enum  <code>Tipo</code> que armazena o tipo(gênero) do jogo.
 	 * @param jogabilidade Conjunto de Enumeradores, que armazena os modos de jogo.
 	 * A coleção HashSet garante que não há duplicatas.
 	 * @throws Exception se o paramêtro <code>nome</code> estiver vazio, ou se o preço for negativo.
 	 */
-	public Jogo(String nome, Double preco, Tipo tipo, HashSet<Jogabilidade> jogabilidade) throws Exception {
+	public Jogo(String nome, Double preco, HashSet<Jogabilidade> jogabilidade) throws Exception {
 		if(checaStringVazia(nome))
 			throw new Exception("nome não pode ser vazio");
 		if(preco < 0)
@@ -69,7 +60,6 @@ public class Jogo {
 		
 		this.nome = nome;
 		this.preco = preco;
-		this.tipo = tipo;
 		this.jogabilidade = jogabilidade;
 	}
 	/**
@@ -91,7 +81,7 @@ public class Jogo {
 	 * @param wasFinished
 	 * @throws Exception
 	 */
-	public void registraJogada (int score, boolean wasFinished) throws Exception {
+	protected int registraJogada (int score, boolean wasFinished) throws Exception {
 		if(score < 0)
 			throw new Exception("Score não pode ser negativo");
 		if(score > maiorScore)
@@ -99,7 +89,9 @@ public class Jogo {
 		if(wasFinished)
 			vezesConcluido ++;
 		vezesJogado++;
+		return 0;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -139,7 +131,7 @@ public class Jogo {
 	/**
 	 * @return the jogabilidade
 	 */
-	public HashSet<Jogabilidade> getJogabilidade() {
+	public Set<Jogabilidade> getJogabilidade() {
 		return jogabilidade;
 	}
 	/**
@@ -153,12 +145,6 @@ public class Jogo {
 	 */
 	public String getNome() {
 		return nome;
-	}
-	/**
-	 * @return the tipo
-	 */
-	public Tipo getTipo() {
-		return tipo;
 	}
 	/**
 	 * @return the maiorScore
@@ -177,6 +163,18 @@ public class Jogo {
 	 */
 	public int getVezesConcluido() {
 		return vezesConcluido;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(String.format("+ %s - %s:\n", nome, getClass().getName()));
+		builder.append(String.format("==> Jogou %d vez(es)\n", getVezesJogado()));
+		builder.append(String.format("==> Zerou %d vez(es)\n", getVezesConcluido()));
+		builder.append(String.format("==> Maior score: %d\n", getMaiorScore()));
+		return builder.toString();
 	}
 	
 	

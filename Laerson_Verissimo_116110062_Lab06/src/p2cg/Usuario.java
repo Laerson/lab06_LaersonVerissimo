@@ -10,7 +10,7 @@ import java.util.Set;
  * @author laersonsv
  *
  */
-public abstract class Usuario {
+public class Usuario {
 	/**
 	 * Nome do cliente.
 	 */
@@ -100,18 +100,16 @@ public abstract class Usuario {
 	}
 	/**
 	 * Adiciona ou remove uma certa quantia de dinheiro ao saldo do usuário.
-	 * @param dinheiro quantia a ser adicionada.
+	 * @param dinheiro quantia a ser adicionada/removida.
 	 */
-	public void adicionaDinheiro(double dinheiro) throws Exception {
+	public void adicionaDinheiro(double dinheiro) {
 		saldo += dinheiro;
 	}
 	/**
-	 * Checa se o usuário tem dinheiro para comprar o jogo, caso tenha, o valor é descontado do saldo, e o
-	 * jogo é adicionado à lista de jogos comprados.
-	 * @param j jogos a ser comprado
-	 * @return true se a compra for realizada com sucesso e false se não houver dinheiro suficiente na conta.
-	 * @throws Exception 
-	 * @throw Exception se <code>j</code> guardar uma referência null.
+	 * Adiciona um jogo à lista de jogos comprados.
+	 * @param j jogo a ser adicionado
+	 * @return
+	 * @throws Exception
 	 */
 	public boolean compraJogo(Jogo j) throws Exception {
 		return addJogo(j);

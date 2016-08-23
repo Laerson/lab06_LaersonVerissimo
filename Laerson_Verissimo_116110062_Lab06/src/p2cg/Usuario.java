@@ -172,7 +172,7 @@ public abstract class Usuario {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(login + "\n");
-		builder.append(String.format("%s - Jogador %s\n", nome, getClass().getName()));
+		builder.append(String.format("%s - Jogador %s\n", nome, getClass().getSimpleName()));
 		builder.append("Lista de Jogos:\n");
 		
 		Iterator<Jogo> i = jogos.iterator();

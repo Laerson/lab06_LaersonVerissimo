@@ -11,6 +11,35 @@ import java.util.Map;
  *
  */
 public class Facade {
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((usuarios == null) ? 0 : usuarios.hashCode());
+		return result;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Facade other = (Facade) obj;
+		if (usuarios == null) {
+			if (other.usuarios != null)
+				return false;
+		} else if (!usuarios.equals(other.usuarios))
+			return false;
+		return true;
+	}
 	/**
 	 * Lista de usuários, que mapeia cada login a um objeto <code>Usuario</code>
 	 */

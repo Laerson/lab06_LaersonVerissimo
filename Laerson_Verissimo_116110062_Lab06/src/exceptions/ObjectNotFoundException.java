@@ -1,3 +1,4 @@
+/* 116110062 - Laerson Saraiva Verissimo: LAB 6 - Turma 2 */
 package exceptions;
 
 public class ObjectNotFoundException extends Exception {

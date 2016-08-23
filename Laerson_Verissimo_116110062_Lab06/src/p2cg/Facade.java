@@ -3,6 +3,12 @@ package p2cg;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import exceptions.InvalidConditionException;
+import exceptions.NullReferenceException;
+import exceptions.NumeroInvalidoException;
+import exceptions.ObjectNotFoundException;
+import exceptions.StringInvalidaException;
 /**
  * Representação da loja do p2cg.
  * <p>
@@ -72,9 +78,9 @@ public class Facade {
 	 */
 	public boolean addDinheiro(double dinheiro, String login) throws Exception {
 		if(dinheiro < 0)
-			throw new Exception("dinheiro não pode ser negativo");
+			throw new NumeroInvalidoException("dinheiro não pode ser negativo");
 		if(!usuarios.containsKey(login))
-			throw new Exception("Login não registrado");
+			throw new ObjectNotFoundException("Login não registrado");
 		usuarios.get(login).adicionaDinheiro(dinheiro);
 		return true;
 	}
@@ -87,9 +93,9 @@ public class Facade {
 	 */
 	public boolean vendeJogo(Jogo j, String login) throws Exception {
 		if(j == null)
-			throw new Exception("jogo não pode ser null");
+			throw new NullReferenceException("jogo não pode ser null");
 		if(Usuario.checaStringVazia(login))
-			throw new Exception("login não pode ser vazio");
+			throw new StringInvalidaException();
 		
 		return usuarios.get(login).compraJogo(j);
 	}
@@ -118,12 +124,12 @@ public class Facade {
 	 */
 	public void upgrade(String login) throws Exception {
 		if(!usuarios.containsKey(login))
-			throw new Exception("login não registrado");
+			throw new ObjectNotFoundException("login não registrado");
 		Usuario u = usuarios.get(login);
 		if(u.getX2p() < 1000)
-			throw new Exception("Quantidade de x2p insuficiente");
+			throw new InvalidConditionException("Quantidade de x2p insuficiente");
 		if(u instanceof Veterano)
-			throw new Exception("Usuário já é veterano");
+			throw new InvalidConditionException("Usuário já é veterano");
 		
 		Usuario u2 = new Veterano(u.getNome(), u.getLogin());
 		u2.adicionaDinheiro(u.getSaldo());

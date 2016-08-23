@@ -1,5 +1,6 @@
 package p2cg;
 
+import exceptions.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -67,9 +68,9 @@ public class Jogo {
 	 */
 	public Jogo(String nome, Double preco, HashSet<Jogabilidade> jogabilidade) throws Exception {
 		if (checaStringVazia(nome))
-			throw new Exception("nome não pode ser vazio");
+			throw new StringInvalidaException("nome não pode ser vazio");
 		if (preco < 0)
-			throw new Exception("preco não pode ser negativo");
+			throw new NumeroInvalidoException("preco não pode ser negativo");
 
 		this.nome = nome;
 		this.preco = preco;
@@ -99,7 +100,7 @@ public class Jogo {
 	 */
 	protected int registraJogada(int score, boolean wasFinished) throws Exception {
 		if (score < 0)
-			throw new Exception("Score não pode ser negativo");
+			throw new NumeroInvalidoException("Score não pode ser negativo");
 		if (score > maiorScore)
 			maiorScore = score;
 		if (wasFinished)

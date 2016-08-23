@@ -5,6 +5,8 @@ package p2cg;
 
 import java.util.HashSet;
 
+import exceptions.NumeroInvalidoException;
+
 /**
  * @author laersonsv
  *
@@ -22,7 +24,7 @@ public class Luta extends Jogo {
 	@Override
 	public int registraJogada(int score, boolean wasFinished) throws Exception {
 		if(score > 100000)
-			throw new Exception("O score máximo é 100.000");
+			throw new NumeroInvalidoException("O score máximo é 100.000");
 		int x2p = 0;
 		if(score > getMaiorScore())
 			x2p = score / 1000;

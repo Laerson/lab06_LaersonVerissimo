@@ -3,6 +3,8 @@
  */
 package p2cg;
 
+import exceptions.NullReferenceException;
+
 /**
  * @author laersonsv
  *
@@ -22,7 +24,7 @@ public class Noob extends Usuario {
 	@Override
 	public boolean compraJogo(Jogo j) throws Exception {
 		if(j == null)
-			throw new Exception("Jogo não pode ser null");
+			throw new NullReferenceException("Jogo não pode ser null");
 		if(getSaldo() < j.getPreco() * 0.9)
 			return false;
 		adicionaDinheiro(-j.getPreco() * 0.9);

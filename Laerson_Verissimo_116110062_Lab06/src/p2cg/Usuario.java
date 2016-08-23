@@ -3,6 +3,10 @@ package p2cg;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
+import exceptions.NullReferenceException;
+import exceptions.ObjectNotFoundException;
+import exceptions.StringInvalidaException;
 /**
  * <code>Usuario</code> é a classe abstrata base de diversos tipos de clientes do p2cg.
  * <p>
@@ -10,7 +14,7 @@ import java.util.Set;
  * @author laersonsv
  *
  */
-public class Usuario {
+public abstract class Usuario {
 	/**
 	 * Nome do cliente.
 	 */
@@ -39,9 +43,9 @@ public class Usuario {
 	 */
 	public Usuario(String nome, String login)  throws Exception {
 		if(checaStringVazia(nome))
-			throw new Exception("nome não pode ser vazio");
+			throw new StringInvalidaException("nome não pode ser vazio");
 		if(checaStringVazia(login))
-			throw new Exception("login não pode ser vazio");
+			throw new StringInvalidaException("login não pode ser vazio");
 		
 		this.nome = nome;
 		this.login = login;
@@ -116,7 +120,7 @@ public class Usuario {
 	}
 	public boolean addJogo(Jogo j) throws Exception {
 		if(j == null)
-			throw new Exception("Jogo não pode ser null");
+			throw new NullReferenceException("Jogo não pode ser null");
 		return jogos.add(j);
 	}
 	/**
@@ -129,7 +133,7 @@ public class Usuario {
 	 */
 	public void registraJogada(String nome, int score, boolean wasFinished) throws Exception {
 		if(checaStringVazia(nome))
-			throw new Exception("nome não pode ser vazio");
+			throw new StringInvalidaException();
 		Iterator<Jogo> i = jogos.iterator();
 		while(i.hasNext()) {
 			Jogo j = i.next();
@@ -138,11 +142,8 @@ public class Usuario {
 				break;
 			}
 		}
-		throw new Exception("O Usuário não comprou esse jogo");
+		throw new ObjectNotFoundException("O Usuário não comprou esse jogo");
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -150,16 +151,13 @@ public class Usuario {
 		result = prime * result + ((login == null) ? 0 : login.hashCode());
 		return result;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
-		if (getClass() != obj.getClass())
+		if (!(obj instanceof Usuario))
 			return false;
 		Usuario other = (Usuario) obj;
 		if (login == null) {
